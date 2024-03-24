@@ -37,81 +37,83 @@ class AddEditExpense extends StatelessWidget {
             ),
             body: Padding(
               padding: Dimens.edgeInsets10,
-              child: Column(
-                children: [
-                  TextField(
-                    controller: controller.discriptionFieldControl,
-                    decoration: const InputDecoration(
-                      hintText: 'Description',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: controller.discriptionFieldControl,
+                      decoration: const InputDecoration(
+                        hintText: 'Description',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
                         ),
                       ),
+                      maxLines: 3,
                     ),
-                    maxLines: 3,
-                  ),
-                  Dimens.boxHeight32,
-                  Row(
-                    children: [
-                      const Text(
-                        'Amount:',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Dimens.boxWidth10,
-                      Expanded(
-                        child: TextField(
-                          controller: controller.amountFieldControl,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            hintText: '0.00',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+                    Dimens.boxHeight32,
+                    Row(
+                      children: [
+                        const Text(
+                          'Amount:',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Dimens.boxWidth10,
+                        Expanded(
+                          child: TextField(
+                            controller: controller.amountFieldControl,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              hintText: '0.00',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Dimens.boxHeight32,
-                  Row(
-                    children: [
-                      const Text(
-                        'Date:',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Dimens.boxWidth10,
-                      TextButton(
-                        onPressed: () {
-                          controller.onTapSelectDate(context);
-                        },
-                        child: controller.selectedDate == null
-                            ? const Text(
-                                'Select Date',
-                                style: TextStyle(color: Colors.blue),
-                              )
-                            : Text(
-                                DateFormat('yyyy-MM-dd').format(
-                                  controller.selectedDate!,
+                      ],
+                    ),
+                    Dimens.boxHeight32,
+                    Row(
+                      children: [
+                        const Text(
+                          'Date:',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        Dimens.boxWidth10,
+                        TextButton(
+                          onPressed: () {
+                            controller.onTapSelectDate(context);
+                          },
+                          child: controller.selectedDate == null
+                              ? const Text(
+                                  'Select Date',
+                                  style: TextStyle(color: Colors.blue),
+                                )
+                              : Text(
+                                  DateFormat('yyyy-MM-dd').format(
+                                    controller.selectedDate!,
+                                  ),
                                 ),
-                              ),
-                      ),
-                    ],
-                  ),
-                  Dimens.boxHeight32,
-                  ElevatedButton(
-                    onPressed: () {
-                      if (isEditView) {
-                        controller.onEditExpense(index);
-                      } else {
-                        controller.onSubmit();
-                      }
-                    },
-                    child: const Text('Submit'),
-                  ),
-                ],
+                        ),
+                      ],
+                    ),
+                    Dimens.boxHeight32,
+                    ElevatedButton(
+                      onPressed: () {
+                        if (isEditView) {
+                          controller.onEditExpense(index);
+                        } else {
+                          controller.onSubmit();
+                        }
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
