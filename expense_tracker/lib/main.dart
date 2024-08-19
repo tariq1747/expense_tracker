@@ -1,18 +1,10 @@
-// import 'package:expense_tracker/utils/notification_service.dart';
-import 'package:expense_tracker/utils/background_activity.dart';
-import 'package:expense_tracker/utils/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-// import 'package:timezone/data/latest.dart' as tz;
-
 import 'utils/navigators/navigators.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await LocalNotificationService.init();
-  await WorkManagerService().init();
   runApp(const MyApp());
 }
 

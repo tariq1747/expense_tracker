@@ -1,7 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:expense_tracker/models/expense_model.dart';
-import 'package:expense_tracker/utils/utils.dart';
+import 'package:Oppointments/models/expense_model.dart';
+import 'package:Oppointments/utils/utility.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -15,7 +16,8 @@ class SqlLiteDB {
   final String _idCol = 'id';
   final String _amountCol = 'amount';
   final String _dateCol = 'date';
-  final String _disCol = 'description';
+  final String _disCol = 'name';
+  final String _sesscol = 'sessions';
 
   factory SqlLiteDB.dbInstance() {
     _sqlLiteDB ??= SqlLiteDB._dbInstance();
@@ -36,7 +38,7 @@ class SqlLiteDB {
 
   void _create(Database db, int version) async {
     await db.execute(
-      'CREATE TABLE $_tableName($_idCol INTEGER PRIMARY KEY AUTOINCREMENT, $_dateCol TEXT, $_amountCol REAL, $_disCol TEXT)',
+      'CREATE TABLE $_tableName($_idCol INTEGER PRIMARY KEY AUTOINCREMENT, $_dateCol TEXT, $_amountCol REAL, $_disCol TEXT , $_sesscol REAL)',
     );
   }
 
@@ -52,6 +54,7 @@ class SqlLiteDB {
 
   Future<int> addData(ExpenseModel em) async {
     Utility.showLoader();
+    log('${em.toMap()}');
     Database db = await getDataBase;
 
     var res = await db.insert(

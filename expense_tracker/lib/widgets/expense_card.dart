@@ -1,4 +1,4 @@
-import 'package:expense_tracker/res/theme/dimens.dart';
+import 'package:Oppointments/res/theme/dimens.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseCart extends StatelessWidget {
@@ -19,7 +19,7 @@ class ExpenseCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.pink[200],
+      color: Colors.blue[100],
       child: ListTile(
         title: Text(
           discription,
@@ -30,7 +30,7 @@ class ExpenseCart extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '\$ $amount',
+              'Rs $amount',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Dimens.boxWidth10,

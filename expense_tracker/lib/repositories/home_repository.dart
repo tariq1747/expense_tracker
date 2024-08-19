@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:expense_tracker/data/local/sql_lite_data_base.dart';
-import 'package:expense_tracker/models/expense_model.dart';
+import 'package:Oppointments/data/local/sql_lite_data_base.dart';
+import 'package:Oppointments/models/expense_model.dart';
 
 class HomeRepository {
   HomeRepository(

@@ -1,9 +1,8 @@
-import 'package:expense_tracker/controllers/controllers.dart';
-import 'package:expense_tracker/res/theme/dimens.dart';
-import 'package:expense_tracker/utils/navigators/routes_management.dart';
-import 'package:expense_tracker/utils/utils.dart';
-import 'package:expense_tracker/widgets/expense_card.dart';
-import 'package:expense_tracker/widgets/schedule_notification_sheet.dart';
+import 'package:Oppointments/controllers/home/home_controller.dart';
+import 'package:Oppointments/res/theme/dimens.dart';
+import 'package:Oppointments/utils/navigators/routes_management.dart';
+import 'package:Oppointments/widgets/expense_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,21 +15,20 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.white,
       appBar: AppBar(
+        leading: Icon(Icons.home),
+        backgroundColor: Colors.blue[100],
         centerTitle: true,
-        title: const Text('your expence'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Utility.openBottomSheet(const ScheduleNotification(),
-                    backgroundColor: Colors.white);
-              },
-              icon: const Icon(Icons.notifications))
-        ],
+        title: const Text(
+          'Patients',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       floatingActionButton: const ElevatedButton(
         onPressed: RouteManagement.goToAdd,
-        child: Text('Add+'),
+        child: Text('Add+',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
       ),
       body: Obx(() {
         return ListView.separated(
@@ -39,7 +37,7 @@ class HomeView extends StatelessWidget {
           itemBuilder: (context, index) => ExpenseCart(
             amount: controller.expenseList[index].amount,
             date: controller.expenseList[index].date,
-            discription: controller.expenseList[index].description,
+            discription: controller.expenseList[index].name,
             onTapDelete: () {
               controller.onDeleteExpense(
                   controller.expenseList[index].id!.toInt(), index);

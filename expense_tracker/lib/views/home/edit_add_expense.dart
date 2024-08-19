@@ -1,6 +1,8 @@
-import 'package:expense_tracker/controllers/controllers.dart';
-import 'package:expense_tracker/res/theme/dimens.dart';
+import 'package:Oppointments/controllers/home/home_controller.dart';
+import 'package:Oppointments/res/theme/dimens.dart';
+import 'package:Oppointments/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -19,101 +21,112 @@ class AddEditExpense extends StatelessWidget {
           var cont = Get.find<HomeController>();
           if (isEditView) {
             cont.amountFieldControl.text = ' ${cont.expenseList[index].amount}';
+            cont.sessionsFieldControl.text =
+                ' ${cont.expenseList[index].sessions}';
             cont.discriptionFieldControl.text =
-                ' ${cont.expenseList[index].description}';
+                ' ${cont.expenseList[index].name}';
             cont.selectedDate = DateTime.parse(cont.expenseList[index].date);
           } else {
             cont.amountFieldControl.clear();
+            cont.sessionsFieldControl.clear();
             cont.discriptionFieldControl.clear();
             cont.selectedDate = null;
           }
         },
         id: upDateId,
         builder: (controller) {
+          String a = controller.sessionsFieldControl.text.isEmpty
+              ? '0'
+              : controller.sessionsFieldControl.text;
+          String b = controller.amountFieldControl.text.isEmpty
+              ? '0'
+              : controller.amountFieldControl.text;
           return Scaffold(
             appBar: AppBar(
-              title: Text(isEditView ? 'Edit' : 'Add'),
+              title: Text(
+                  isEditView ? 'Edit Patient details' : 'Add Patient details'),
               centerTitle: true,
+              actions: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 80.sp),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(
+                      'Rs:${num.parse(a) * num.parse(b)}',
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ],
             ),
             body: Padding(
               padding: Dimens.edgeInsets10,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextField(
-                      controller: controller.discriptionFieldControl,
-                      decoration: const InputDecoration(
-                        hintText: 'Description',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
+                    Dimens.boxHeight32,
+                    CustomText(
+                        lable: 'Name',
+                        child: Textf(
+                          readOnly: isEditView,
+                          controller: controller.discriptionFieldControl,
+                        )),
+                    Dimens.boxHeight32,
+                    CustomText(
+                        lable: 'Pay Amount Rs.',
+                        child: Textf(
+                          readOnly: isEditView,
+                          textInputType: TextInputType.number,
+                          controller: controller.amountFieldControl,
+                        )),
+                    Dimens.boxHeight32,
+                    CustomText(
+                      lable: 'No. of sessions',
+                      child: Textf(
+                        textInputType: TextInputType.number,
+                        controller: controller.sessionsFieldControl,
                       ),
-                      maxLines: 3,
                     ),
                     Dimens.boxHeight32,
-                    Row(
-                      children: [
-                        const Text(
-                          'Amount:',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Dimens.boxWidth10,
-                        Expanded(
-                          child: TextField(
-                            controller: controller.amountFieldControl,
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              hintText: '0.00',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
+                    CustomText(
+                      lable: 'Date',
+                      child: TextButton(
+                        onPressed: () {
+                          controller.onTapSelectDate(context);
+                        },
+                        child: controller.selectedDate == null
+                            ? const Text(
+                                'Select Date',
+                                style: TextStyle(color: Colors.blue),
+                              )
+                            : Text(
+                                DateFormat('yyyy-MM-dd').format(
+                                  controller.selectedDate!,
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Dimens.boxHeight32,
-                    Row(
-                      children: [
-                        const Text(
-                          'Date:',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Dimens.boxWidth10,
-                        TextButton(
-                          onPressed: () {
-                            controller.onTapSelectDate(context);
-                          },
-                          child: controller.selectedDate == null
-                              ? const Text(
-                                  'Select Date',
-                                  style: TextStyle(color: Colors.blue),
-                                )
-                              : Text(
-                                  DateFormat('yyyy-MM-dd').format(
-                                    controller.selectedDate!,
-                                  ),
-                                ),
-                        ),
-                      ],
-                    ),
-                    Dimens.boxHeight32,
-                    ElevatedButton(
-                      onPressed: () {
-                        if (isEditView) {
-                          controller.onEditExpense(index);
-                        } else {
-                          controller.onSubmit();
-                        }
-                      },
-                      child: const Text('Submit'),
+                      ),
                     ),
                   ],
                 ),
+              ),
+            ),
+            floatingActionButton: ElevatedButton(
+              style: const ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(Colors.black),
+              ),
+              onPressed: () {
+                if (isEditView) {
+                  controller.onEditExpense(index);
+                } else {
+                  controller.onSubmit();
+                }
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Save',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white)),
               ),
             ),
           );

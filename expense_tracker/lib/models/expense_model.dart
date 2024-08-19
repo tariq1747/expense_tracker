@@ -4,25 +4,29 @@ class ExpenseModel {
   final num? id;
   final String date;
   final num amount;
-  final String description;
+  final num sessions;
+  final String name;
   ExpenseModel({
     this.id,
     required this.date,
     required this.amount,
-    required this.description,
+    required this.sessions,
+    required this.name,
   });
 
   ExpenseModel copyWith({
     num? id,
     String? date,
     num? amount,
-    String? description,
+    int? sessions,
+    String? name,
   }) {
     return ExpenseModel(
       id: id ?? this.id,
       date: date ?? this.date,
       amount: amount ?? this.amount,
-      description: description ?? this.description,
+      sessions: sessions ?? this.sessions,
+      name: name ?? this.name,
     );
   }
 
@@ -31,16 +35,18 @@ class ExpenseModel {
       'id': id,
       'date': date,
       'amount': amount,
-      'description': description,
+      'sessions': sessions,
+      'name': name,
     };
   }
 
   factory ExpenseModel.fromMap(Map<String, dynamic> map) {
     return ExpenseModel(
-      id: map['id'] as num,
+      id: map['id'],
       date: map['date'] as String,
       amount: map['amount'] as num,
-      description: map['description'] as String,
+      sessions: map['sessions'] as num,
+      name: map['name'] as String,
     );
   }
 
@@ -51,7 +57,7 @@ class ExpenseModel {
 
   @override
   String toString() {
-    return 'ExpenseModel(id: $id, date: $date, amount: $amount, description: $description)';
+    return 'ExpenseModel(id: $id, date: $date, amount: $amount, sessions: $sessions, name: $name)';
   }
 
   @override
@@ -61,11 +67,16 @@ class ExpenseModel {
     return other.id == id &&
         other.date == date &&
         other.amount == amount &&
-        other.description == description;
+        other.sessions == sessions &&
+        other.name == name;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ date.hashCode ^ amount.hashCode ^ description.hashCode;
+    return id.hashCode ^
+        date.hashCode ^
+        amount.hashCode ^
+        sessions.hashCode ^
+        name.hashCode;
   }
 }
